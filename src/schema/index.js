@@ -8,9 +8,14 @@ const typeDefs = `
     firstName: String!
     lastName: String!
   }
+
+  type Mutation {
+    createUser(firstName: String!, lastName: String!): User 
+  }
   
   type Query {
-    allUsers: [User]
+    allUsers: [User!]!
+    user(_id: Int!): User!  
   }
 `
 
