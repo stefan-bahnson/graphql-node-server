@@ -10,6 +10,11 @@ const { graphqlExpress, graphiqlExpress } = require('apollo-server-express')
 const schema = require('./schema/index')
 
 const app = express()
+
+app.get('/', (req, res) => {
+  res.redirect('/graphiql')
+})
+
 app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }))
 
 app.use('/graphiql', graphiqlExpress({
