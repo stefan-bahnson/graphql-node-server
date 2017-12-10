@@ -11,10 +11,18 @@ const Users = [
   },
 ];
 
+
 module.exports = {
   Query: {
-    allUsers: function() {
-      return Users
-    },
+    allUsers: () => Users,
+    user: (_, args) => 
+    Users.find(user => user._id === args._id)
+  },
+  Mutation: {
+    createUser: (_, args) => {
+      const newUser = Object.assign({_id: Users.length + 1}, args)
+      Users.push(newUser)
+      return newUser
+    }
   },
 };
