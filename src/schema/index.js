@@ -4,7 +4,7 @@ const resolvers = require('./resolvers')
 // Define your types here.
 const typeDefs = `
   type User {
-    _id: Int!
+    _id: String!
     firstName: String!
     lastName: String!
   }
@@ -15,7 +15,7 @@ const typeDefs = `
   
   type Query {
     allUsers: [User!]!
-    user(_id: Int!): User!  
+    user(_id: String!): User!  
   }
 `
 

@@ -1,28 +1,18 @@
-const Users = [
-  {
-    _id: 1,
-    firstName: 'Lena',
-    lastName: 'Last'
-  },
-  {
-    _id: 2,
-    firstName: 'Stefan',
-    lastName: 'Bahnson'
-  },
-];
-
+const ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
   Query: {
-    allUsers: () => Users,
-    user: (_, args) => 
-    Users.find(user => user._id === args._id)
+    allUsers: async (root, data, { mongo: { Users }}) => await Users.find().toArray() ,
+    user: async (_, args, { mongo: { Users }}) => {
+      const user = await Users.findOne({ _id: ObjectId( args._id )})
+      console.log(user);
+      return user;
+    }
   },
   Mutation: {
-    createUser: (_, args) => {
-      const newUser = Object.assign({_id: Users.length + 1}, args)
-      Users.push(newUser)
-      return newUser
+    createUser: async (_, args, { mongo: { Users }}) => {
+      const newUser = await Users.insertOne( args )
+      return newUser.ops[0];
     }
   },
 };
